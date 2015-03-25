@@ -8,9 +8,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'vim-scripts/Decho'
+"Plugin 'vim-scripts/Decho'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'groenewege/vim-less'
 Plugin 'scrooloose/nerdtree'
@@ -26,6 +25,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mattn/emmet-vim'
+Plugin 'scrooloose/syntastic'
 
 call vundle#end()
 "-----------------------------------------------------
@@ -41,13 +41,7 @@ set expandtab
 
 " JS context coloring
 let g:js_context_colors_enabled=0
-" let g:js_context_colors_foldlevel=16
-" g:js_context_colors
-" let g:js_context_colors_insertmode=1
-" let g:js_context_colors_usemaps=1
-" let g:js_context_colors_colorize_comments=1
 let g:js_context_colors_comment_higroup=1
-" g:js_context_colors_debug
 
 " Tab/indentation settings
 set tabstop=2
@@ -56,7 +50,7 @@ set softtabstop=0
 set expandtab
 set fdm=marker
 set textwidth=88
-set nocindent
+set cindent
 set ruler
 
 "   highlight all its matches.
@@ -156,25 +150,18 @@ if executable('ag')
 endif
 
 " Syntastic
+let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=2
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
-let g:syntastic_ruby_exec = '~/.rvm/bin/ruby-1.9.3-p194'
 
 " JS Syntax
-" autocmd BufReadPre *.js let b:javascript_lib_use_jquery     = 1
-" autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
-" autocmd BufReadPre *.js let b:javascript_lib_use_backbone   = 1
-" autocmd BufReadPre *.js let b:javascript_lib_use_prelude    = 0
-" autocmd BufReadPre *.js let b:javascript_lib_use_angularjs  = 1
-
-" Indent guides
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 2
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
+autocmd BufReadPre *.js let b:javascript_lib_use_jquery     = 1
+"" autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_backbone   = 1
+"" autocmd BufReadPre *.js let b:javascript_lib_use_prelude    = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_angularjs  = 1
 
 " Git-gutter same color as number gutter
 highlight SignColumn ctermbg=black
@@ -190,9 +177,6 @@ let g:Powerline_symbols='fancy'
 let g:fugitive_github_domains = ['git.github.com']
 "call vam#ActivateAddons(['powerline'])
 set fillchars+=stl:\ ,stlnc:\
-
-" JSLint for Syntastic
-let g:syntastic_javascript_checkers = ['jslint']
 
 " Airline/Tmuxline
 let g:airline_powerline_fonts = 1
@@ -220,13 +204,6 @@ let mapleader=","
 nnoremap Q <Nop>
 imap <BS> <Nop>
 
-" Some text expansion
-"inoremap ( ()<Esc>i
-"inoremap [ []<Esc>i
-"inoremap { {<CR>}<Esc>O
-
-nmap <silent> f @f<CR>
-
 " Paste toggle on F2
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
@@ -241,27 +218,6 @@ map <leader>v :view %%;
 map <leader>. :JSContextColorToggle<CR>
 map <leader>c !defcol<cr>
 nnoremap <leader><leader> <c-^>
-
-" Splits
-map <leader>gr :topleft 100 :split README.md<cr>
-map <leader>gb :topleft 100 :split bower.json<cr>
-map <leader>gg :topleft 100 :split Gruntfile.js<cr>
-
-" CSS Mega indent thing
-function! Incr()
-  let a = line('.') - line("'<")
-  let c = virtcol("'<")
-  if a > 0
-    execute 'normal! '.c.'|'.a."\<C-a>"
-  endif
-  normal `<
-endfunction
-vnoremap <C-a> :call Incr()<CR>
-
-" Javascript stuff
-" ----------------------------------------------------
-" au FileType javascript JSContextColor
-
 
 " Spelling check
 " ----------------------------------------------------
@@ -313,3 +269,7 @@ noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+
+set conceallevel=2 
+let g:javascript_conceal = 1
+let g:javascript_conceal_function = "ƒ"
