@@ -1,55 +1,45 @@
+"-----------------------------------------------------
 "  INSTALL PLUGINS VIA VUNDLE
 "-----------------------------------------------------
 
-" Required stuff
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'vim-scripts/Decho'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'pangloss/vim-javascript'
-"Bundle 'vim-scripts/JavaScript-Indent'
-Bundle 'groenewege/vim-less'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'vim-gitgutter'
-Bundle 'kien/ctrlp.vim'
-"Bundle 'scrooloose/syntastic'
-Bundle 'othree/javascript-libraries-syntax.vim'
-Bundle 'othree/html5.vim'
-Bundle 'nathanaelkane/vim-indent-guides.git'
-"Bundle 'Lokaltog/vim-powerline'
-Bundle 'tpope/vim-fugitive'
-"Bundle 'wookiehangover/jshint.vim'
-"Bundle 'Lokaltog/powerline'
-"Bundle 'bling/vim-airline'
-"Bundle 'edkolev/tmuxline.vim'
-Bundle 'morhetz/gruvbox'
-"Bundle 'csapprox'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'bigfish/vim-js-context-coloring'
-Bundle 'junegunn/vim-easy-align'
-Bundle 'nicklasnygren/vim-ngdoc'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'marijnh/tern_for_vim'
-Bundle 'Raimondi/delimitMate'
-"Bundle 'vim-scripts/HTML-AutoCloseTag'
-Bundle 'mattn/emmet-vim'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
+Plugin 'gmarik/Vundle.vim'
+Plugin 'vim-scripts/Decho'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'groenewege/vim-less'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'vim-gitgutter'
+Plugin 'kien/ctrlp.vim'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'othree/html5.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'bigfish/vim-js-context-coloring'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'mattn/emmet-vim'
+
+call vundle#end()
 "-----------------------------------------------------
 " SETTINGS
 "-----------------------------------------------------
 
 " Syntax/indent stuff
-syntax on
 filetype plugin indent on
+syntax on
 set autoindent
 set smartindent
 set expandtab
 
+" JS context coloring
 let g:js_context_colors_enabled=0
 " let g:js_context_colors_foldlevel=16
 " g:js_context_colors
@@ -235,12 +225,6 @@ imap <BS> <Nop>
 "inoremap [ []<Esc>i
 "inoremap { {<CR>}<Esc>O
 
-" Map directional buttons to hjkl
-nmap <silent> <A-Up> :wincmd k<CR>
-nmap <silent> <A-Down> :wincmd j<CR>
-nmap <silent> <A-Left> :wincmd h<CR>
-nmap <silent> <A-Right> :wincmd l<CR>
-
 nmap <silent> f @f<CR>
 
 " Paste toggle on F2
@@ -323,3 +307,9 @@ let g:ycm_add_preview_to_completeopt=0
 
 " Emmet
 let g:user_emmet_leader_key='<C-j>'
+
+" Disable arrow keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
