@@ -82,15 +82,16 @@ export EDITOR='vim'
 #alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
 alias gr='grep -Rni --color'
 alias vi='vim'
-#eval "$(rbenv init -)"
+eval "$(rbenv init -)"
+eval "$(nodenv init -)"
 
 #Boxen
 
 #export POWERLINE_CONFIG_COMMAND=~/2.7/bin/powerline-config
 #export PATH="/Users/nicklasnygren/.powerline/bin:$PATH"
+source ~/.bin/tmuxinator.zsh
 export POWERLINE_CONFIG_PATH=~/.config/powerline
 . ~/.powerline/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-#source ~/.bin/tmuxinator.zsh
 
 bindkey '^R' history-incremental-search-backward
 

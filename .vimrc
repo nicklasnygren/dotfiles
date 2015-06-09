@@ -1,6 +1,7 @@
 "-----------------------------------------------------
 "  INSTALL PLUGINS VIA VUNDLE
 "-----------------------------------------------------
+"
 
 set nocompatible
 filetype off
@@ -47,11 +48,11 @@ let g:js_context_colors_comment_higroup=1
 set tabstop=2
 set shiftwidth=2
 set softtabstop=0
-set expandtab
 set fdm=marker
 set textwidth=88
 set cindent
 set ruler
+set nofoldenable
 
 "   highlight all its matches.
 set hlsearch
@@ -273,3 +274,6 @@ noremap <Right> <NOP>
 set conceallevel=2 
 let g:javascript_conceal = 1
 let g:javascript_conceal_function = "ƒ"
+
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
