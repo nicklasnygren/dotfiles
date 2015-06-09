@@ -108,7 +108,7 @@ set background=dark
 "let g:solarized_termcolors=256
 "let g:solarized_visibility="high"
 "let g:solarized_contrast="high"
-"let g:solarized_termtrans=0
+let g:solarized_termtrans=1
 "let g:solarized_termcolors=256
 colorscheme solarized
 "highlight Normal ctermbg=base03
@@ -171,7 +171,7 @@ highlight GitGutterDelete ctermbg=black ctermfg=cyan
 highlight GitGutterChangeDelete ctermbg=black ctermfg=cyan
 
 " Powerline stuff
-"set rtp+=/Users/nicklasnygren/Library/Python/2.7/lib/python/site-packages/powerline/bindings/vim
+set rtp+=/opt/boxen/homebrew/lib/python2.7/site-packages/powerline/bindings/vim
 set laststatus=2
 let g:Powerline_symbols='fancy'
 let g:fugitive_github_domains = ['git.github.com']

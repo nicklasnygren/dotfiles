@@ -1,4 +1,4 @@
-export LC_ALL=en_US.UTF-7  
+export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
 
 # Path to your oh-my-zsh configuration.
@@ -56,6 +56,7 @@ source $ZSH/oh-my-zsh.sh
 
 DEFAULT_USER=nicklasnygren
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+source /opt/boxen/env.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # # Preferred editor for local and remote sessions
@@ -78,14 +79,18 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 export PATH=/Applications/Postgres93.app/Contents/MacOS/bin:$PATH
 
 export EDITOR='vim'
-alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
+#alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
 alias gr='grep -Rni --color'
 alias vi='vim'
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 
-. ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+#Boxen
+
+#export POWERLINE_CONFIG_COMMAND=~/2.7/bin/powerline-config
+#export PATH="/Users/nicklasnygren/.powerline/bin:$PATH"
 export POWERLINE_CONFIG_PATH=~/.config/powerline
-source ~/.bin/tmuxinator.zsh
+. ~/.powerline/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+#source ~/.bin/tmuxinator.zsh
 
 bindkey '^R' history-incremental-search-backward
 
@@ -97,3 +102,5 @@ setopt extended_glob
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 export NVM_DIR=~/.nvm
+
+export KEYTIMEOUT=1
