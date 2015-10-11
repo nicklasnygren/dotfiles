@@ -48,7 +48,7 @@ ZSH=$HOME/.oh-my-zsh
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git tmuxinator brew)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -82,7 +82,7 @@ export EDITOR='vim'
 #alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
 alias gr='grep -Rni --color'
 alias vi='vim'
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 eval "$(nodenv init -)"
 
 #Boxen
@@ -105,3 +105,4 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 export NVM_DIR=~/.nvm
 
 export KEYTIMEOUT=1
+export MAVEN_OPTS=-Djava.awt.headless=true

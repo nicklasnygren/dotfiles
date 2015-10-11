@@ -27,6 +27,10 @@ Plugin 'marijnh/tern_for_vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/syntastic'
+Plugin 'SirVer/ultisnips'
+Plugin 'tpope/vim-abolish'
+Plugin 'mxw/vim-jsx'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()
 "-----------------------------------------------------
@@ -39,6 +43,8 @@ syntax on
 set autoindent
 set smartindent
 set expandtab
+set hidden
+set nowrap
 
 " JS context coloring
 let g:js_context_colors_enabled=0
@@ -53,6 +59,9 @@ set textwidth=88
 set cindent
 set ruler
 set nofoldenable
+
+"   default yank register
+set clipboard=unnamed
 
 "   highlight all its matches.
 set hlsearch
@@ -71,7 +80,7 @@ set encoding=utf-8
 set number
 
 " Enable mouse
-set mouse=a
+"set mouse=a
 
 " As-you-type-search
 set incsearch
@@ -101,6 +110,8 @@ set showmode
 "-------------------------------------------------
 " VISUAL
 "-------------------------------------------------
+
+set cursorline
 
 " Theme settings
 "set t_Co=256
@@ -191,9 +202,6 @@ let g:tmuxline_preset = {
 " Redraw on focus
 au FocusGained * :q!
 
-" Nerdtree stuff
-map <Leader>m <plug>NERDTreeTabsToggle<CR>
-
 "--------------------------------------------------
 " BINDINGS
 "--------------------------------------------------
@@ -218,6 +226,9 @@ map <leader>e :edit %%
 map <leader>v :view %%;
 map <leader>. :JSContextColorToggle<CR>
 map <leader>c !defcol<cr>
+map <Leader>m <plug>NERDTreeTabsToggle<CR>
+map <Leader>a :lprev<CR>
+map <Leader>s :lnext<CR>
 nnoremap <leader><leader> <c-^>
 
 " Spelling check
@@ -263,7 +274,9 @@ set completeopt-=preview
 let g:ycm_add_preview_to_completeopt=0
 
 " Emmet
-let g:user_emmet_leader_key='<C-j>'
+"let g:user_emmet_leader_key='<C-j>'
+let g:UltiSnipsExpandTrigger="<C-l>"
+let g:UltiSnipsEditSplit="context"
 
 " Disable arrow keys
 noremap <Up> <NOP>
@@ -277,3 +290,46 @@ let g:javascript_conceal_function = "ƒ"
 
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_w = 0
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+let g:syntastic_javascript_checkers = ["eslint"]
+
+" Define a command to make it easier to use
+command! -nargs=+ QFDo call QFDo(<q-args>)
+
+" Function that does the work
+function! QFDo(command)
+    " Create a dictionary so that we can
+    " get the list of buffers rather than the
+    " list of lines in buffers (easy way
+    " to get unique entries)
+    let buffer_numbers = {}
+    " For each entry, use the buffer number as 
+    " a dictionary key (won't get repeats)
+    for fixlist_entry in getqflist()
+        let buffer_numbers[fixlist_entry['bufnr']] = 1
+    endfor
+    " Make it into a list as it seems cleaner
+    let buffer_number_list = keys(buffer_numbers)
+
+    " For each buffer
+    for num in buffer_number_list
+        " Select the buffer
+        exe 'buffer' num
+        " Run the command that's passed as an argument
+        exe a:command
+        " Save if necessary
+        update
+    endfor
+endfunction
+
+vnoremap // "sy/<C-R>"<CR>"
