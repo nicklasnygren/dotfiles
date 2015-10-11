@@ -1,0 +1,220 @@
+snippet for "for loop" !w
+for (let ${1:i} = ${2:0}; ${3:$1 < ${4:LIMIT}; ${5:$1++}}) {
+	${0:${VISUAL:\/\/}}
+}
+endsnippet
+
+snippet ex "export" !w
+export ${0:${VISUAL:something}}
+endsnippet
+
+snippet c "constant" !s
+const ${1:SOME_CONSTANT} = ${2:'${0:$1}'};
+endsnippet
+
+snippet switch "switch" !w
+switch (${1:foo}) {
+	case ${2:bar}:
+		${3://}
+	default:
+		${0:${VISUAL:\/\/}}
+}
+endsnippet
+
+snippet e "expect" !w
+expect(${1:${VISUAL:foo}}).${2:toBe(${3:bar})};
+endsnippet
+
+snippet try "try... catch" !w
+try {
+	${1:${VISUAL:\/\/}}
+}
+catch (err) {
+	${2://}
+}
+endsnippet
+
+snippet tim "setTimeout" !w
+setTimeout(() => {
+	${1:${VISUAL:\/\/}}
+}, ${2:0});
+endsnippet
+
+snippet log "Console log"
+console.log(${1:'${2:lorem ipsum}'})${3:;}
+endsnippet
+
+snippet des "Jasmine describe" !i
+describe('${1:assertion group title}', function() {
+	${0:${VISUAL:\/\/}}
+});
+endsnippet
+
+snippet it "Jasmine it" !i
+it('${1:assertion title}', function($2) {
+	${3://}`!p
+if (len(t[2]) > 0):
+	snip.shift()
+	snip += ""
+	snip += t[2] + "();"
+	`
+});$4
+endsnippet
+
+snippet aft "Jasmine afterEach" !w
+afterEach(function() {
+	${1:${VISUAL:\/\/}}
+});$2
+endsnippet
+
+snippet bef "Jasmine afterEach" !w
+beforeEach(function() {
+	${1:${VISUAL:\/\/}}
+});$2
+endsnippet
+
+snippet fun "Function declaration" !w
+function $1($2) {
+	${0:${VISUAL:\/\/}}
+}
+endsnippet
+
+snippet fn "Arrow function" !w
+($1) => $2
+endsnippet
+
+snippet prom "Promise" !w
+new Promise((resolve, reject) => {
+	${1:${VISUAL:\/\/}}
+})$2
+endsnippet
+
+snippet if "If" !w
+if ($1) {
+	${2:${VISUAL:\/\/}}
+}$3
+endsnippet
+
+snippet el "Else" !w
+else {
+	${1:${VISUAL:\/\/}}
+}$2
+endsnippet
+
+snippet elif "Else" !w
+else if ($1) {
+	${2:${VISUAL:\/\/}}
+}$3
+endsnippet
+
+snippet class "Class declaration" !b
+/**
+ * @class ${1/ .*$//)}
+ *
+ * TODO: Add description
+ */
+class ${1:MyClass} {
+
+	/**
+	 * @constructs ${1/ .*$//)}`!p
+def paramStr(param):
+	param = param.strip().split(" ")[0].split("=")
+	if (len(param) > 1):
+		return "[%s=%s]" % (param[0], param[1])
+	else:
+		return param[0]
+
+if len(t[2]) > 0:
+	snip.shift()
+	for param in list(map(paramStr, t[2].split(","))):
+		snip += " * @param {*} " + param
+`
+	 */
+	constructor($2) {`!p
+if t[1].find("extends") > -1:
+	snip.shift(2)
+	snip += "super();"
+	snip += ""
+	`
+		${3:// Constructor}
+	}
+
+	${4:// Additional methods...}
+}
+endsnippet
+
+snippet met "Class/object method" !b
+/**
+ * @function $1`!p
+def paramStr(param):
+	param = param.strip().split(" ")[0].split("=")
+	if (len(param) > 1):
+		return "[%s=%s]" % (param[0], param[1])
+	else:
+		return param[0]
+
+if len(t[2]) > 0:
+	for param in list(map(paramStr, t[2].split(","))):
+		snip += " * @param {*} " + param
+`
+ */
+${1:myMethod}($2) {
+	${3://}
+}$4
+endsnippet
+
+snippet rerr "return if error" !b
+if (err) return ${1:cb}(err);
+endsnippet
+
+snippet t "then(...)" !w
+.then($1)$2
+endsnippet
+
+snippet ret "return" !b
+return ${1:false};
+endsnippet
+
+snippet im "import statement" !b
+import ${1:${2:something} from }'${3:somewhere}';$4
+endsnippet
+
+snippet rclass "react component" !w
+export const ${1:MyComponent} = React.createClass({
+	proptypes: {
+		${2:// Property types}
+	},
+
+	render() {
+		${3:// Render logic}
+
+		return (
+			${0:${VISUAL:<div \/>}}
+		);
+	}
+});
+endsnippet
+
+snippet rel "react element" !b
+<${1:div}${2: className="${3}"}>
+	${3:${VISUAL}}
+</$1>
+endsnippet
+
+snippet imr "import react" !w
+import React from 'react';
+endsnippet
+
+snippet rstate "react class state methods" !w
+getInitialState() {
+	return {
+		${2:// Initial state}
+	};
+},
+
+componentDidMount() {
+	${1:// Component mount}
+},
+endsnippet
+
+
