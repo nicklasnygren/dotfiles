@@ -86,6 +86,7 @@ alias vi='vim'
 eval "$(nodenv init -)"
 
 #Boxen
+powerline-daemon -q
 
 #export POWERLINE_CONFIG_COMMAND=~/2.7/bin/powerline-config
 #export PATH="/Users/nicklasnygren/.powerline/bin:$PATH"
