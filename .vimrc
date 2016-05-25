@@ -15,7 +15,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'groenewege/vim-less'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'vim-gitgutter'
+"Plugin 'vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'othree/html5.vim'
@@ -31,11 +31,20 @@ Plugin 'SirVer/ultisnips'
 Plugin 'tpope/vim-abolish'
 Plugin 'mxw/vim-jsx'
 Plugin 'mileszs/ack.vim'
+Plugin 'itchyny/lightline.vim'
+Plugin 'vim-scripts/ingo-library'
+Plugin 'vim-scripts/AdvancedSorters'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'embear/vim-localvimrc'
 
 call vundle#end()
 "-----------------------------------------------------
 " SETTINGS
 "-----------------------------------------------------
+
+" Redraw stuff
+set lazyredraw
+set ttyfast
 
 " Syntax/indent stuff
 filetype plugin indent on
@@ -49,13 +58,14 @@ set nowrap
 " JS context coloring
 let g:js_context_colors_enabled=0
 let g:js_context_colors_comment_higroup=1
+let g:js_context_colors_block_scope=1
 
 " Tab/indentation settings
 set tabstop=2
 set shiftwidth=2
 set softtabstop=0
 set fdm=marker
-set textwidth=88
+set textwidth=100
 set cindent
 set ruler
 set nofoldenable
@@ -118,10 +128,9 @@ set cursorline
 "let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 set background=dark
 "let g:solarized_termcolors=256
-"let g:solarized_visibility="high"
-"let g:solarized_contrast="high"
+"let g:solarized_visibility="low"
+"let g:solarized_contrast="medium"
 let g:solarized_termtrans=1
-"let g:solarized_termcolors=256
 colorscheme solarized
 "highlight Normal ctermbg=base03
 
@@ -150,6 +159,7 @@ let c_syntax_for_h=1
 :execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 
 " The Silver Searcher
+let g:ctrlp_working_path_mode = 0
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
@@ -160,13 +170,6 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-
-" Syntastic
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=2
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
 
 " JS Syntax
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery     = 1
@@ -182,25 +185,16 @@ highlight GitGutterChange ctermbg=black ctermfg=cyan
 highlight GitGutterDelete ctermbg=black ctermfg=cyan
 highlight GitGutterChangeDelete ctermbg=black ctermfg=cyan
 
-" Powerline stuff
-set rtp+=/opt/boxen/homebrew/lib/python2.7/site-packages/powerline/bindings/vim
+" Light line tabline
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ }
 set laststatus=2
-let g:Powerline_symbols='fancy'
-let g:fugitive_github_domains = ['git.github.com']
-"call vam#ActivateAddons(['powerline'])
+
 set fillchars+=stl:\ ,stlnc:\
 
-" Airline/Tmuxline
-let g:airline_powerline_fonts = 1
-let g:tmuxline_preset = {
-  \'a'    : '#S',
-  \'b'    : ' #(git rev-parse --abbrev-ref HEAD)',
-  \'win'  : ['#I', '#W'],
-  \'cwin' : ['#I', '#W', '#F'],
-  \'z'    : '#(whoami)'}
-
 " Redraw on focus
-au FocusGained * :q!
+au FocusGained * :redraw!
 
 "--------------------------------------------------
 " BINDINGS
@@ -225,10 +219,11 @@ map <leader>b :CtrlPBuffer<cr>
 map <leader>e :edit %%
 map <leader>v :view %%;
 map <leader>. :JSContextColorToggle<CR>
-map <leader>c !defcol<cr>
 map <Leader>m <plug>NERDTreeTabsToggle<CR>
 map <Leader>a :lprev<CR>
 map <Leader>s :lnext<CR>
+map <Leader>n :cnext<CR>
+map <Leader>c :cprev<CR>
 nnoremap <leader><leader> <c-^>
 
 " Spelling check
@@ -295,11 +290,15 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_check_on_w = 0
+" Syntastic
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_check_on_open=0
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=2
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_check_on_wq=0
+let g:syntastic_check_on_w=1
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 let g:syntastic_javascript_checkers = ["eslint"]
 
@@ -332,4 +331,20 @@ function! QFDo(command)
     endfor
 endfunction
 
+function! ReplaceAll(search, replace)
+  exe 'silent Ggrep ' . a:search . ' | QFDo %s/' . a:search . '/' . a:replace . '/ge | update | redraw!'
+endfunction
+
 vnoremap // "sy/<C-R>"<CR>"
+
+command! RestoreTests execute "silent Ggrep fdescribe | QFDo %s/fdescribe/describe/ge | QFDo Ggrep fit | %s/fit/it/ge | update | redraw!"
+command! -nargs=+ ReplaceAll call ReplaceAll(<f-args>)
+command! DeleteCurrentFile call delete(expand('%')) | bdelete!
+
+if !exists('g:easy_align_delimiters')
+  let g:easy_align_delimiters = {}
+endif
+let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
+
+" Localvimrc
+let g:localvimrc_whitelist='/Users/nicklasnygren/repos/.*'
